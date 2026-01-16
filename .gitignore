@@ -1,0 +1,6 @@
+target/
+*.log
+*.zip
+*.tar.gz
+*.pem
+*.war
