@@ -71,11 +71,11 @@ To verify the connectivity within the VPC from the EC2 instances, I used:
 To initialize the application data, I performed a manual migration of the database schema and data into the **Amazon RDS** instance.
 
 ### The Migration Process:
-1.  **Bastion/Jump Host:** Since the RDS instance is in a private subnet and not publicly accessible, I launched a temporary **EC2 Instance** (Ubuntu/Amazon Linux) within the same VPC.
-2.  **Security Group Tunneling:** I temporarily allowed inbound MySQL traffic (Port 3306) on the RDS Security Group from the EC2 Instance's Private IP.
+1.  **Bastion/Jump Host:** Since the RDS instance is in a private subnet and not publicly accessible, I launched a temporary **EC2 Instance** (Ubuntu) within the same VPC.
+2.  **Security Group Tunneling:** I temporarily allowed inbound MySQL traffic (Port 3306) on the RDS Security Group from the EC2 Instance's Security Group.
 3.  **Data Upload:**
     * Uploaded the `db_backup.sql` from the project repository to the EC2 instance.
-    * Installed the MySQL client on the EC2 instance: `sudo yum install mysql -y`.
+    * Installed the MySQL client on the EC2 instance: `apt update && apt install mysql-client git -y`.
 4.  **Database Restoration:** Executed the migration command to restore the backup into the managed RDS endpoint:
     ```bash
     mysql -h <rds-endpoint> -u <admin-user> -p <db_name> < db_backup.sql
